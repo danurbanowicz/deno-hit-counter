@@ -52,8 +52,8 @@ I call this app a "hit counter" because it's unable to collect one of the most u
 ```
 <img src="https://deno-hit-counter.deno.dev" width="1" height="1" alt="Pixel">
 ```
-5. Hit your endpoint and you should see the visit logged in the Deno KV dashboard
+5. Load a page with the pixel present or hit your endpoint directly, and you should see the visit logged in your project's Deno KV dashboard
 
 ## Thanks
 
-Thanks to [@oliverjam](https://github.com/oliverjam) for the inspiration to do this with his blog post [Build your own analytics with Netlify Functions](https://oliverjam.es/articles/diy-analytics-netlify-functions).
+Thanks to [@oliverjam](https://github.com/oliverjam) for the inspiration from his blog post [Build your own analytics with Netlify Functions](https://oliverjam.es/articles/diy-analytics-netlify-functions).
