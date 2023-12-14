@@ -47,7 +47,7 @@ I call this app a "hit counter" because it's unable to collect one of the most u
 1. Clone this repo and push to GitHub
 2. Create a new Deno Deploy project and connect your repo to it
 3. Add `SITE_SALT` and `SITE_ID` environment variables to your Deno Deploy project (the values can be anything but the salt should ideally be at least 16 characters in length)
-4. Add the image tag to the pages you want to track, probably somewhere
+4. Add the image tag to the pages you want to track, before the closing `</body>` tag.
 
 ```
 <img src="https://deno-hit-counter.deno.dev" width="1" height="1" alt="Pixel">
