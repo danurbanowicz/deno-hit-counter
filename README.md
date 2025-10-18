@@ -54,6 +54,10 @@ I call this app a "hit counter" because it's unable to collect one of the most u
 ```
 5. Load a page with the pixel present or hit your endpoint directly, and you should see the visit logged in your project's Deno KV dashboard
 
+## Testing
+
+Use the Deno test runner to the the test located at `test.ts` with: `deno task start`
+
 ## Thanks
 
 Thanks to [@oliverjam](https://github.com/oliverjam) for the inspiration from his blog post [Build your own analytics with Netlify Functions](https://oliverjam.es/articles/diy-analytics-netlify-functions).
