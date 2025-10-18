@@ -1,10 +1,11 @@
 // Import dependencies
-import { 
+import {
   Application,
   crypto,
-  toHashString,
-  base64,
-  ulid } from "./deps.ts";
+  encodeHex,
+  decodeBase64,
+  ulid
+} from "./deps.ts";
 
 // Import models
 import { Visit } from "./models.ts";
@@ -16,16 +17,16 @@ const app = new Application();
 const kv = await Deno.openKv();
 
 // The 1px x 1px transparent GIF as a Base64-encoded string
-const pixel = base64.toUint8Array("R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+const pixel = decodeBase64("R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
 
 // The site's ID
-const s_id: string = Deno.env.get("SITE_ID");
+const s_id: string = Deno.env.get("SITE_ID") ?? "";
 
 // The site's secret salt
-const s_salt: string = Deno.env.get("SITE_SALT");
+const s_salt: string = Deno.env.get("SITE_SALT") ?? "";
 
 // The location of the Edge node that handled the request (for debugging)
-const a_region: string = Deno.env.get("DENO_REGION");
+const a_region: string = Deno.env.get("DENO_REGION") ?? "";
 
 // Capture visit data and write to the DB
 app.use(async (ctx, next) => {
@@ -36,7 +37,7 @@ app.use(async (ctx, next) => {
   const v_id: string = ulid(); // ULID for the visit
   const v_ip: string = ctx.request.ip; // Visit request IP
   const v_rf: string = ctx.request.headers.get("Referer") || "unknown"; // Referrer string
-  const v_ua: string = ctx.request.headers.get("User-Agent"); // Browser UA string
+  const v_ua: string = ctx.request.headers.get("User-Agent") || "unknown"; // Browser UA string
 
   // Generate the visitor hash
 
@@ -50,7 +51,7 @@ app.use(async (ctx, next) => {
   const hash = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(serializedArr));
 
   // Finally, output the hash as a string
-  const visitor = toHashString(hash);
+  const visitor = encodeHex(new Uint8Array(hash));
 
   try {
 
@@ -65,7 +66,7 @@ app.use(async (ctx, next) => {
 
     // Write the visit object to Deno KV
     await kv.set(["visit", v.id], v);
-    
+
     // Confirm that the visit was successfully written
     const entry = await kv.get(["visit", v.id]);
     console.log(`Visit ${v.id} was successfully stored with versionstamp: ${entry.versionstamp}`);
@@ -80,8 +81,8 @@ app.use(async (ctx, next) => {
 });
 
 // Return a response immediately (the pixel)
-app.use((ctx, Status) => {
-  ctx.response.status = Status.OK;
+app.use((ctx) => {
+  ctx.response.status = 200;
   ctx.response.type = "image/gif";
   // Ask the browser to always request the pixel
   ctx.response.headers.set("Cache-Control", "no-cache, no-store, must-revalidate");
