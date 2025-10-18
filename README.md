@@ -4,6 +4,8 @@ A simple [Deno](https://deno.com) app written in TypeScript that responds to a h
 
 It's an example of how you could count visits to your website's pages in a privacy-respecting way.
 
+Demo pixel: https://deno-hit-counter.deno.dev/
+
 ## How it works
 
 When the pixel `<img>` tag is present on a page on your website, a visit to that page will trigger a request to the Deno app, and a transparent 1x1 pixel GIF is served. In the background, some data is collected from the request:-
