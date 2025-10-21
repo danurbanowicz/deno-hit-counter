@@ -58,7 +58,7 @@ I call this app a "hit counter" because it's unable to collect one of the most u
 
 ## Testing
 
-Use the Deno test runner to the the test located at `test.ts` with: `deno task start`
+Use the Deno test runner to the the test located at `test.ts` with: `deno task test`
 
 ## Thanks
 

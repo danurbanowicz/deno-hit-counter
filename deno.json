@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "test": "deno test --allow-env test.ts"
+    "test": "deno test --allow-env --unstable-kv test.ts"
   },
   "deploy": {
     "project": "43fd59c1-83ea-4049-9176-0d433efc9568",
